@@ -2,7 +2,7 @@ import React from "react";
 
 export type NavigationLink = {
   key: string;
-  title: string;
+  title?: string;
   href?: string;
   path?: string;
   component?: React.ReactNode;
