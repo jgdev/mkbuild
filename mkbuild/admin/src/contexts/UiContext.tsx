@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState } from "react";
 
 export type UiContextTheme = "dark" | "light";
 
-export type HeaderActions = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+export type HeaderAction = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   icon?: any;
   id: string;
 };
@@ -10,7 +10,7 @@ export type HeaderActions = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 export type UiHeader = {
   header?: string | React.ReactNode;
   subHeader?: string | React.ReactNode;
-  actions: HeaderActions[] | React.ReactNode;
+  actions: HeaderAction[] | React.ReactNode;
 };
 
 export type UiContext = {

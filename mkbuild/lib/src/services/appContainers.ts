@@ -1,4 +1,6 @@
-export type AppContainer = {
+import { Entity } from "../entity";
+
+export type AppContainer = Partial<Entity> & {
   name: string;
   dependsOf: string[];
   variables: Array<{

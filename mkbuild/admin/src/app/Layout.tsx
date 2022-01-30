@@ -5,19 +5,12 @@ import {
   BellIcon,
   MenuIcon,
   XIcon,
-  PencilIcon,
-  LinkIcon,
   ChevronDownIcon,
-  CheckIcon,
-  BriefcaseIcon,
-  LocationMarkerIcon,
-  CalendarIcon,
-  CurrencyDollarIcon,
 } from "@heroicons/react/outline";
 
 import { NavigationLink } from ".";
 import navigationPaths from "./paths";
-import { useUiContext } from "../contexts/ui";
+import { useUiContext } from "../contexts/UiContext";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -49,11 +42,9 @@ export const DashboardLayout = ({
   );
   const { uiHeader } = useUiContext();
 
-  console.log(uiHeader);
-
   return (
     <>
-      <div className="min-h-full">
+      <div className="min-h-full  font-mono">
         <Disclosure as="nav" className="bg-gray-800">
           {({ open }: any) => (
             <>
@@ -256,7 +247,7 @@ export const DashboardLayout = ({
                           type="button"
                           {...buttonProps}
                           className={classNames(
-                            "inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium",
+                            "inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
                             action.className
                           )}
                         >

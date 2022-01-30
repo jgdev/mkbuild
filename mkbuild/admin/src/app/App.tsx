@@ -3,7 +3,8 @@ import { Routes, Route } from "react-router-dom";
 
 import paths from "./paths";
 import DashboardLayout from "./Layout";
-import { withUiContext } from "../contexts/ui";
+import { withUiContext } from "../contexts/UiContext";
+import { withApplicationContext } from "../contexts/ApplicationContext";
 
 export const defaultFallback = <>Loading ...</>;
 
@@ -37,4 +38,4 @@ export const App = () => {
   );
 };
 
-export default withUiContext(App);
+export default withApplicationContext(withUiContext(App));
