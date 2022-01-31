@@ -7,7 +7,7 @@ export type ApplicationContext = {
   addEnvironment: (environment: Partial<Environment>) => void;
   currentEnvironment?: Environment;
   appContainers: AppContainer[];
-  setCurrentEnvironment: (environmentId: string) => void;
+  setCurrentEnvironment: (environmentId: string | undefined) => void;
 };
 
 export const initialState: Partial<ApplicationContext> = {};
@@ -24,7 +24,7 @@ export const withApplicationContext =
       Environment | undefined
     >();
 
-    const setCurrentEnvironment = (environmentId: string) => {
+    const setCurrentEnvironment = (environmentId: string | undefined) => {
       _setCurrentEnvironment(
         environments.find((env) => env.id === environmentId)
       );

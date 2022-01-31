@@ -1,11 +1,13 @@
-import { useEffect } from "react";
-import { useUiContext } from "../contexts/UiContext";
-import { useApplicationContext } from "../contexts/ApplicationContext";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
-import AppContainerList from "../components/AppContainerList";
-import AppContainerDetails from "../components/AppContainerDetails";
+import { useUiContext } from "@mkbuild/contexts/UiContext";
+import { useApplicationContext } from "@mkbuild/contexts/ApplicationContext";
+import AppContainerList from "@mkbuild/components/AppContainerList";
+import AppContainerDetails from "@mkbuild/components/AppContainerDetails";
 
-export const PageBuildContainers = () => {
+export const AppContainersPage = () => {
+  const { appContainerId } = useParams();
   const { setUiHeader } = useUiContext();
   const {
     appContainers,
@@ -20,19 +22,30 @@ export const PageBuildContainers = () => {
 
     setUiHeader({
       header: "App Containers",
-      actions: [
+      breadcrumLinks: [
+        { href: "/", title: "List", id: "app-containers-list" },
+        {
+          title: "Details",
+          href: "/1",
+          id: "app-container-details",
+          showIf: () => !!appContainerId,
+        },
+      ],
+      actions: !appContainerId && [
         {
           id: "create-application",
           children: "Create App Container",
         },
       ],
     });
-  }, [environments, currentEnvironment]);
+  }, [environments, currentEnvironment, appContainerId]);
+
   return (
     <>
-      <AppContainerList data={appContainers} />
+      {!appContainerId && <AppContainerList data={appContainers} />}
+      {appContainerId && <AppContainerDetails />}
     </>
   );
 };
 
-export default PageBuildContainers;
+export default AppContainersPage;

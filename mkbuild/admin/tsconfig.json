@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "target": "ESNext",
     "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
@@ -16,9 +17,9 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
-      "@mkbuild/lib": ["./node_modules/@mkbuild/lib/src"],
-      "@mkbuild/lib/*": ["./node_modules/@mkbuild/lib/src/*"]
+      "@mkbuild/*": ["src/*"],
+      "@mkbuild/lib/*": ["node_modules/@mkbuild/lib/src/*"]
     }
   },
-  "include": ["./src"]
+  "include": ["./src", "./node_modules/@mkbuild/lib/src"]
 }

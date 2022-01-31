@@ -1,13 +1,22 @@
 import React from "react";
-import NotFound from "../components/NotFound";
-const AppContainer = React.lazy(() => import("../pages/AppContainersPage"));
+
+const NotFound = React.lazy(() => import("@mkbuild/pages/NotFound"));
+const AppContainersPage = React.lazy(
+  () => import("@mkbuild/pages/AppContainersPage")
+);
 
 export default [
   {
     title: "App Containers",
-    component: AppContainer,
+    component: AppContainersPage,
     href: "/",
     path: "/",
+    key: "app-containers-list",
+  },
+  {
+    title: "App Details",
+    component: AppContainersPage,
+    path: "/:appContainerId",
     key: "app-containers-list",
   },
   {

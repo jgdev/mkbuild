@@ -2,9 +2,9 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 
 import paths from "./paths";
-import DashboardLayout from "./Layout";
-import { withUiContext } from "../contexts/UiContext";
-import { withApplicationContext } from "../contexts/ApplicationContext";
+import DashboardLayout from "@mkbuild/components/Layout";
+import { withUiContext } from "@mkbuild/contexts/UiContext";
+import { withApplicationContext } from "@mkbuild/contexts/ApplicationContext";
 
 export const defaultFallback = <>Loading ...</>;
 

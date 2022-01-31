@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import { matchPath, NavLink, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import {
   BellIcon,
@@ -8,9 +9,9 @@ import {
   ChevronDownIcon,
 } from "@heroicons/react/outline";
 
-import { NavigationLink } from ".";
-import navigationPaths from "./paths";
-import { useUiContext } from "../contexts/UiContext";
+import { NavigationLink } from "@mkbuild/app";
+import navigationPaths from "@mkbuild/app/paths";
+import { useUiContext } from "@mkbuild/contexts/UiContext";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -40,11 +41,15 @@ export const DashboardLayout = ({
     (navigationPath) =>
       navigationPath.path && matchPath(navigationPath.path, location.pathname)
   );
-  const { uiHeader } = useUiContext();
+  const { uiHeader, currentBreadcrumLink, setCurrentBreadcrumLink } =
+    useUiContext();
+  const { breadcrumLinks } = uiHeader;
+
+  console.log(currentBreadcrumLink);
 
   return (
     <>
-      <div className="min-h-full  font-mono">
+      <div className="min-h-full">
         <Disclosure as="nav" className="bg-gray-800">
           {({ open }: any) => (
             <>
@@ -233,6 +238,38 @@ export const DashboardLayout = ({
                 uiHeader?.header}
               <div className="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 sm:space-x-6">
                 {uiHeader?.subHeader}
+                {breadcrumLinks && (
+                  <div className="mt-2 flex items-center text-sm text-gray-500">
+                    {breadcrumLinks.map((breadcrumLink, index) => {
+                      const isLink = true;
+                      const checkShowPresent =
+                        typeof breadcrumLink.showIf !== "undefined";
+                      return (
+                        (!checkShowPresent
+                          ? true
+                          : breadcrumLink.showIf!()) && (
+                          <Fragment key={breadcrumLink.id}>
+                            {(isLink && (
+                              <Link
+                                to={breadcrumLink.href}
+                                onClick={() =>
+                                  setCurrentBreadcrumLink({
+                                    breadcrumLink,
+                                    index,
+                                  })
+                                }
+                              >
+                                {breadcrumLink.title}
+                              </Link>
+                            )) ||
+                              breadcrumLink.title}
+                            {<>&nbsp;&nbsp;{">"}&nbsp;&nbsp;</>}
+                          </Fragment>
+                        )
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             </div>
             <div className="mt-5 flex lg:mt-0 lg:ml-4">
@@ -247,7 +284,7 @@ export const DashboardLayout = ({
                           type="button"
                           {...buttonProps}
                           className={classNames(
-                            "inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
+                            "inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium",
                             action.className
                           )}
                         >

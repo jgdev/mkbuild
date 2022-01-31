@@ -1,5 +1,5 @@
 export const AppContainerDetails = () => {
-  return <>div</>;
+  return <>Details</>;
 };
 
 export default AppContainerDetails;
