@@ -17,28 +17,32 @@ export const AppContainersPage = () => {
   } = useApplicationContext();
 
   useEffect(() => {
-    if (!currentEnvironment && environments.length)
-      setCurrentEnvironment(environments[0].id);
-
     setUiHeader({
       header: "App Containers",
       breadcrumLinks: [
-        { href: "/", title: "List", id: "app-containers-list" },
+        {
+          href: "/",
+          title: "List",
+          id: "app-containers-list",
+          selectedWhen: () => !appContainerId,
+        },
         {
           title: "Details",
           href: "/1",
           id: "app-container-details",
           showIf: () => !!appContainerId,
+          selectedWhen: () => !!appContainerId,
         },
       ],
       actions: !appContainerId && [
         {
           id: "create-application",
           children: "Create App Container",
+          className: "bg-indigo-600 text-white text-sm",
         },
       ],
     });
-  }, [environments, currentEnvironment, appContainerId]);
+  }, [appContainerId]);
 
   return (
     <>

@@ -12,6 +12,7 @@ export type BreadcrumLink = {
   id: string;
   href: string;
   showIf?: () => boolean;
+  selectedWhen: () => boolean;
 };
 
 export type UiHeader = {
@@ -30,14 +31,10 @@ export type UiContext = {
     breadcrumLink: BreadcrumLink;
     index: number;
   };
-  setCurrentBreadcrumLink: (
-    currentBreadcrumLink:
-      | {
-          breadcrumLink: BreadcrumLink;
-          index: number;
-        }
-      | undefined
-  ) => void;
+  setCurrentBreadcrumLink: (value: {
+    breadcrumLink: BreadcrumLink;
+    index: number;
+  }) => void;
 };
 
 export const initialState: Partial<UiContext> = {};
@@ -50,23 +47,43 @@ export const withUiContext =
   (Component: any, value?: Partial<UiContext>) => (props: any) => {
     const [theme, setTheme] = useState<UiContextTheme>("light");
     const [uiHeader, _setUiHeader] = useState<Partial<UiHeader>>({});
-    const [currentBreadcrumLink, setCurrentBreadcrumLink] = useState<
-      { breadcrumLink: BreadcrumLink; index: number } | undefined
-    >();
+    const [currentBreadcrumLink, setCurrentBreadcrumLink] =
+      useState<{ breadcrumLink: BreadcrumLink; index: number }>();
 
     const setUiHeader = (value: Partial<UiHeader>) =>
       _setUiHeader({ ...uiHeader, ...value });
 
     useEffect(() => {
-      if (
-        uiHeader?.breadcrumLinks &&
-        uiHeader?.breadcrumLinks.length > 0 &&
-        !currentBreadcrumLink
-      ) {
-        setCurrentBreadcrumLink({
-          breadcrumLink: uiHeader?.breadcrumLinks![0],
-          index: 0,
-        });
+      if (uiHeader?.breadcrumLinks) {
+        const result = uiHeader?.breadcrumLinks.reduce(
+          (
+            result: { index?: number; breadcrumLink?: BreadcrumLink },
+            current,
+            index
+          ) => {
+            const isSelected =
+              current.selectedWhen() &&
+              !!(
+                current.showIf ||
+                function () {
+                  return true;
+                }
+              )();
+            return {
+              breadcrumLink: (isSelected && current) || result.breadcrumLink,
+              index: isSelected ? index : result.index,
+            };
+          },
+          { index: undefined, breadcrumLink: undefined }
+        );
+        setCurrentBreadcrumLink(
+          result.breadcrumLink
+            ? {
+                breadcrumLink: result.breadcrumLink!,
+                index: result.index!,
+              }
+            : undefined
+        );
       }
     }, [uiHeader?.breadcrumLinks]);
 

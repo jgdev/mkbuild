@@ -18,7 +18,38 @@ export const useApplicationContext = () => useContext(UiContext);
 
 export const withApplicationContext =
   (Component: any, value?: Partial<ApplicationContext>) => (props: any) => {
-    const [appContainers] = useState<AppContainer[]>([]);
+    const [appContainers] = useState<AppContainer[]>([
+      {
+        id: "test-static-site",
+        name: "Test Static Site",
+        dependsOf: [],
+        variables: [],
+        key: "web-static",
+        type: "web",
+        url: "http://localhost:3000",
+        status: "Running",
+      },
+      {
+        id: "android-app",
+        name: "Android App",
+        dependsOf: [],
+        variables: [],
+        key: "android-app",
+        type: "android",
+        url: "http://localhost:3000/builds/android/apk",
+        status: "Compiled",
+      },
+      {
+        id: "http-api",
+        name: "RESTful api",
+        dependsOf: [],
+        variables: [],
+        type: "web",
+        key: "api",
+        url: "http://localhost:3001",
+        status: "Running",
+      },
+    ]);
     const [environments, setEnvironments] = useState<Environment[]>([]);
     const [currentEnvironment, _setCurrentEnvironment] = useState<
       Environment | undefined

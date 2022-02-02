@@ -45,8 +45,6 @@ export const DashboardLayout = ({
     useUiContext();
   const { breadcrumLinks } = uiHeader;
 
-  console.log(currentBreadcrumLink);
-
   return (
     <>
       <div className="min-h-full">
@@ -241,13 +239,12 @@ export const DashboardLayout = ({
                 {breadcrumLinks && (
                   <div className="mt-2 flex items-center text-sm text-gray-500">
                     {breadcrumLinks.map((breadcrumLink, index) => {
-                      const isLink = true;
-                      const checkShowPresent =
-                        typeof breadcrumLink.showIf !== "undefined";
+                      const isLink = !breadcrumLink.selectedWhen();
+                      const isHidden =
+                        typeof breadcrumLink.showIf !== "undefined" &&
+                        !breadcrumLink.showIf!();
                       return (
-                        (!checkShowPresent
-                          ? true
-                          : breadcrumLink.showIf!()) && (
+                        !isHidden && (
                           <Fragment key={breadcrumLink.id}>
                             {(isLink && (
                               <Link
@@ -263,7 +260,11 @@ export const DashboardLayout = ({
                               </Link>
                             )) ||
                               breadcrumLink.title}
-                            {<>&nbsp;&nbsp;{">"}&nbsp;&nbsp;</>}
+                            {index !== currentBreadcrumLink?.index && (
+                              <div style={{ userSelect: "none" }}>
+                                &nbsp;&nbsp;{">"}&nbsp;&nbsp;
+                              </div>
+                            )}
                           </Fragment>
                         )
                       );

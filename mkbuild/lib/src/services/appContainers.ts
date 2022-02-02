@@ -2,12 +2,16 @@ import { Entity } from "../entity";
 
 export type AppContainer = Partial<Entity> & {
   name: string;
+  key: string;
   dependsOf: string[];
   variables: Array<{
     name: string;
     value: string;
   }>;
   recreate?: boolean;
+  type: "android" | "ios" | "web";
+  url?: string;
+  status: string
 };
 
 export interface AppContainerService {
