@@ -44,7 +44,7 @@ export const withApplicationContext =
         name: "RESTful api",
         dependsOf: [],
         variables: [],
-        type: "web",
+        type: "server",
         key: "api",
         url: "http://localhost:3001",
         status: "Running",

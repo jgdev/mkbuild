@@ -13,9 +13,7 @@ import { NavigationLink } from "@mkbuild/app";
 import navigationPaths from "@mkbuild/app/paths";
 import { useUiContext } from "@mkbuild/contexts/UiContext";
 
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(" ");
-}
+import { classNames } from "@mkbuild/utils/component-helpers";
 
 export type DashboardLayoutProps = {
   user?: Partial<{

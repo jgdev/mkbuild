@@ -9,7 +9,7 @@ export type AppContainer = Partial<Entity> & {
     value: string;
   }>;
   recreate?: boolean;
-  type: "android" | "ios" | "web";
+  type: "android" | "ios" | "web" | "server" | "cronjob" | "labda";
   url?: string;
   status: string
 };
